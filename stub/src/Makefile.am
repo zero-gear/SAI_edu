@@ -28,8 +28,8 @@ libsai_la_SOURCES = \
                        stub_sai_vlan.c \
                        stub_sai_rif.c \
                        stub_sai_host_interface.c \
-		       stub_sai_lag.c
-					   
+                       stub_sai_lag.c
+
 libsai_la_LIBADD =
 
 libsai_apiincludedir = $(includedir)/sai

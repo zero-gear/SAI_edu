@@ -740,6 +740,35 @@ sai_status_t stub_create_object(sai_object_type_t type, uint32_t data, sai_objec
     return SAI_STATUS_SUCCESS;
 }
 
+sai_status_t stub_destroy_object(sai_object_type_t type, sai_object_id_t *object_id)
+{
+    uint32_t     unused_data;
+    sai_status_t status;
+
+    if (NULL == object_id) {
+        STUB_LOG_ERR("NULL object id value\n");
+        return SAI_STATUS_INVALID_PARAMETER;
+    }
+
+    if (*object_id == SAI_NULL_OBJECT_ID) {
+        STUB_LOG_ERR("SAI_NULL_OBJECT_ID object id value\n");
+        return SAI_STATUS_INVALID_PARAMETER;
+    }
+
+    if (type >= SAI_OBJECT_TYPE_MAX) {
+        STUB_LOG_ERR("Unknown object type %d\n", type);
+        return SAI_STATUS_INVALID_PARAMETER;
+    }
+
+    status = stub_object_to_type(*object_id, type, &unused_data);
+    if (status != SAI_STATUS_SUCCESS) {
+        return status;
+    }
+
+    memset(object_id, 0, sizeof(*object_id));
+    return SAI_STATUS_SUCCESS;
+}
+
 static sai_status_t stub_fill_genericlist(size_t element_size, void *data, uint32_t count, void *list)
 {
     /* all list objects have same field count in the beginning of the object, and then different data,

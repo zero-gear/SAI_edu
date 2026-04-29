@@ -39,6 +39,7 @@ extern const sai_next_hop_group_api_t   next_hop_group_api;
 extern const sai_router_interface_api_t router_interface_api;
 extern const sai_vlan_api_t             vlan_api;
 extern const sai_hostif_api_t           host_interface_api;
+extern const sai_lag_api_t              lag_api;
 
 /*
  *  SAI operation type
@@ -222,6 +223,7 @@ sai_status_t sai_nexthops_to_str(_In_ uint32_t               next_hop_count,
                                  _Out_ char                 *str);
 sai_status_t stub_object_to_type(sai_object_id_t object_id, sai_object_type_t type, uint32_t *data);
 sai_status_t stub_create_object(sai_object_type_t type, uint32_t data, sai_object_id_t *object_id);
+sai_status_t stub_destroy_object(sai_object_type_t type, sai_object_id_t *object_id);
 
 void db_init_next_hop_group();
 sai_status_t db_get_next_hop_group(_In_ uint32_t next_hop_group_id, _Out_ sai_object_list_t *next_hop_list);
