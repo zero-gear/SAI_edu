@@ -42,17 +42,17 @@ int main()
     printf(" ========================== CREATING ===================\n");
     // --- Create LAG#1
     sai_object_id_t lag1_oid;
-    sai_object_id_t lg1_port_list[64];
-    sai_attribute_t lg1_attrs[2];
+    sai_object_id_t lg1_port_list[32];
+    sai_attribute_t lg1_attrs[1];
     lg1_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg1_attrs[0].value.objlist.list = lg1_port_list;
-    lg1_attrs[0].value.objlist.count = 64;
-    status = lag_api->create_lag(&lag1_oid, 0, NULL);
+    lg1_attrs[0].value.objlist.count = 32;
+    status = lag_api->create_lag(&lag1_oid, 1, lg1_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to create a LAG#1, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#1: 0x%lX\n", lag1_oid);
+        //printf("\t└> CREATE LAG#1: 0x%lX\n", lag1_oid);
     }
 
     // --- Create LAG_MEMBER#1 {LAG_ID:LAG#1, PORT_ID:PORT#1}
@@ -67,7 +67,7 @@ int main()
         printf("Failed to create a LAG#1 MEMBER#1, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#1 MEMBER#1: 0x%lX\n", lg1_mem1_oid);
+        //printf("\t└> CREATE LAG#1 MEMBER#1: 0x%lX\n", lg1_mem1_oid);
     }
 
     // --- Create LAG_MEMBER#2 {LAG_ID:LAG#1, PORT_ID:PORT#2}
@@ -82,22 +82,22 @@ int main()
         printf("Failed to create a LAG#1 MEMBER#2, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#1 MEMBER#2: 0x%lX\n", lg1_mem2_oid);
+        //printf("\t└> CREATE LAG#1 MEMBER#2: 0x%lX\n", lg1_mem2_oid);
     }
 
     // --- Create LAG#2
     sai_object_id_t lag2_oid;
-    sai_object_id_t lg2_port_list[64];
-    sai_attribute_t lg2_attrs[2];
+    sai_object_id_t lg2_port_list[32];
+    sai_attribute_t lg2_attrs[1];
     lg2_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg2_attrs[0].value.objlist.list = lg2_port_list;
-    lg2_attrs[0].value.objlist.count = 64;
-    status = lag_api->create_lag(&lag2_oid, 0, NULL);
+    lg2_attrs[0].value.objlist.count = 32;
+    status = lag_api->create_lag(&lag2_oid, 1, lg2_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to create a LAG#2, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#2: 0x%lX\n", lag2_oid);
+        //printf("\t└> CREATE LAG#2: 0x%lX\n", lag2_oid);
     }
 
     // --- Create LAG_MEMBER#3 {LAG_ID:LAG#2, PORT_ID:PORT#3}
@@ -112,7 +112,7 @@ int main()
         printf("Failed to create a LAG#2 MEMBER#3, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#2 MEMBER#3: 0x%lX\n", lg2_mem3_oid);
+        //printf("\t└> CREATE LAG#2 MEMBER#3: 0x%lX\n", lg2_mem3_oid);
     }
 
     // --- Create LAG_MEMBER#4 {LAG_ID:LAG#2, PORT_ID:PORT#4}
@@ -127,7 +127,7 @@ int main()
         printf("Failed to create a LAG#2 MEMBER#4, status=%d\n", status);
         return 1;
     } else {
-        printf("CREATE LAG#2 MEMBER#4: 0x%lX\n", lg2_mem4_oid);
+        //printf("\t└> CREATE LAG#2 MEMBER#4: 0x%lX\n", lg2_mem4_oid);
     }
 
     // ========================== GETTING  ==========================
@@ -136,25 +136,25 @@ int main()
     sai_attribute_t lg1_port_list_attrs[1];
     lg1_port_list_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg1_port_list_attrs[0].value.objlist.list = lg1_port_list;
-    lg1_port_list_attrs[0].value.objlist.count = 64;
+    lg1_port_list_attrs[0].value.objlist.count = 32;
     status = lag_api->get_lag_attribute(lag1_oid, 1, lg1_port_list_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to get a LAG#1 PORT_LIST, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#1 PORT_LIST\n");
+        //printf("\t└> GET LAG#1 PORT_LIST\n");
     }
     // --- Get LAG#2 PORT_LIST [Expected: (PORT#3, PORT#4)]
     sai_attribute_t lg2_port_list_attrs[1];
     lg2_port_list_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg2_port_list_attrs[0].value.objlist.list = lg2_port_list;
-    lg2_port_list_attrs[0].value.objlist.count = 64;
+    lg2_port_list_attrs[0].value.objlist.count = 32;
     status = lag_api->get_lag_attribute(lag2_oid, 1, lg2_port_list_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to get a LAG#2 PORT_LIST, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#2 PORT_LIST\n");
+        //printf("\t└> GET LAG#2 PORT_LIST\n");
     }
     // --- Get LAG_MEMBER#1 LAG_ID [Expected: LAG#1]
     sai_attribute_t lg1_mem1_lag_id_attrs[1];
@@ -165,7 +165,7 @@ int main()
         printf("Failed to get a LAG#1 MEMBER#1 LAG_ID, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#1 MEMBER#1 LAG_ID\n");
+        //printf("\t└> GET LAG#1 MEMBER#1 LAG_ID\n");
     }
     // --- Get LAG_MEMBER#3 PORT_ID [Expected: PORT#3]
     sai_attribute_t lg2_mem3_port_id_attrs[1];
@@ -176,7 +176,7 @@ int main()
         printf("Failed to get a LAG#2 MEMBER#3 PORT_ID, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#2 MEMBER#3 PORT_ID\n");
+        //printf("\t└> GET LAG#2 MEMBER#3 PORT_ID\n");
     }
 
     // ========================== REMOVE and GETTING =================
@@ -187,18 +187,18 @@ int main()
         printf("Failed to remove a LAG#1 MEMBER#2, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#1 MEMBER#2: 0x%lX\n", lg1_mem2_oid);
+        //printf("\t└> REMOVE LAG#1 MEMBER#2: 0x%lX\n", lg1_mem2_oid);
     }
     // --- Get LAG#1 PORT_LIST [Expected: (PORT#1)]
     lg1_port_list_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg1_port_list_attrs[0].value.objlist.list = lg1_port_list;
-    lg1_port_list_attrs[0].value.objlist.count = 64;
+    lg1_port_list_attrs[0].value.objlist.count = 32;
     status = lag_api->get_lag_attribute(lag1_oid, 1, lg1_port_list_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to get a LAG#1 PORT_LIST, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#1 PORT_LIST\n");
+        //printf("\t└> GET LAG#1 PORT_LIST\n");
     }
     // --- Remove LAG#2 MEMBER#3
     status = lag_api->remove_lag_member(lg2_mem3_oid);
@@ -206,18 +206,18 @@ int main()
         printf("Failed to remove a LAG#2 MEMBER#3, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#2 MEMBER#3: 0x%lX\n", lg2_mem3_oid);
+        //printf("\t└> REMOVE LAG#2 MEMBER#3: 0x%lX\n", lg2_mem3_oid);
     }
     // --- Get LAG#2 PORT_LIST [Expected: (PORT#4)]
     lg2_port_list_attrs[0].id = SAI_LAG_ATTR_PORT_LIST;
     lg2_port_list_attrs[0].value.objlist.list = lg2_port_list;
-    lg2_port_list_attrs[0].value.objlist.count = 64;
+    lg2_port_list_attrs[0].value.objlist.count = 32;
     status = lag_api->get_lag_attribute(lag2_oid, 1, lg2_port_list_attrs);
     if (status != SAI_STATUS_SUCCESS) {
         printf("Failed to get a LAG#2 PORT_LIST, status=%d\n", status);
         return 1;
     } else {
-        printf("GET LAG#2 PORT_LIST\n");
+        //printf("\t└> GET LAG#2 PORT_LIST\n");
     }
 
     // ========================== REMOVING ==========================
@@ -228,7 +228,7 @@ int main()
         printf("Failed to remove a LAG#1 MEMBER#1, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#1 MEMBER#1: 0x%lX\n", lg1_mem1_oid);
+        //printf("\t└> REMOVE LAG#1 MEMBER#1: 0x%lX\n", lg1_mem1_oid);
     }
 
     // --- Remove LAG#2 MEMBER#4
@@ -237,7 +237,7 @@ int main()
         printf("Failed to remove a LAG#2 MEMBER#4, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#2 MEMBER#4: 0x%lX\n", lg2_mem4_oid);
+        //printf("\t└> REMOVE LAG#2 MEMBER#4: 0x%lX\n", lg2_mem4_oid);
     }
 
     // --- Remove LAG#2
@@ -246,7 +246,7 @@ int main()
         printf("Failed to remove a LAG#2, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#2: 0x%lX\n", lag2_oid);
+        //printf("\t└> REMOVE LAG#2: 0x%lX\n", lag2_oid);
     }
 
     // --- Remove LAG#1
@@ -255,7 +255,7 @@ int main()
         printf("Failed to remove a LAG#1, status=%d\n", status);
         return 1;
     } else {
-        printf("REMOVE LAG#1: 0x%lX\n", lag1_oid);
+        //printf("\t└> REMOVE LAG#1: 0x%lX\n", lag1_oid);
     }
 
     printf("\nHappy End\n\n");

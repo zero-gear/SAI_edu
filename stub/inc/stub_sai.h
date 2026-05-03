@@ -79,7 +79,8 @@ typedef enum _sai_attribute_value_type_t {
     SAI_ATTR_VAL_TYPE_VLANLIST,
     SAI_ATTR_VAL_TYPE_ACLFIELD,
     SAI_ATTR_VAL_TYPE_ACLACTION,
-    SAI_ATTR_VAL_TYPE_PORTBREAKOUT
+    SAI_ATTR_VAL_TYPE_PORTBREAKOUT,
+    SAI_ATTR_VAL_TYPE_OIDLIST
 } sai_attribute_value_type_t;
 typedef struct _sai_attribute_entry_t {
     sai_attr_id_t              id;
