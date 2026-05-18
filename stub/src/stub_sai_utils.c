@@ -594,8 +594,10 @@ sai_status_t sai_value_to_str(_In_ sai_attribute_value_t      value,
 
     case SAI_ATTR_VAL_TYPE_OID:
         stub_object_id = (stub_object_id_t*)&value.oid;
-        snprintf(value_str, max_length, "%s %x",
-                 SAI_TYPE_STR(sai_object_type_query(value.oid)), stub_object_id->data);
+        snprintf(value_str, max_length, "oid=0x%016" PRIx64 " [%s#%u]",
+                 (uint64_t)value.oid,
+                 SAI_TYPE_STR(sai_object_type_query(value.oid)),
+                 stub_object_id->data);
         break;
 
     case SAI_ATTR_VAL_TYPE_OBJLIST:
@@ -690,8 +692,8 @@ sai_status_t sai_attr_list_to_str(_In_ uint32_t                     attr_count,
         sai_value_to_str(attr_list[ii].value, functionality_attr[index].type, MAX_VALUE_STR_LEN, value_str);
         pos += snprintf(list_str + pos,
                         max_length - pos,
-                        "#%u %s val:%s ",
-                        ii,
+                        "%s%s=%s",
+                        (ii > 0) ? "; " : "",
                         functionality_attr[index].attrib_name,
                         value_str);
         if (pos > max_length) {

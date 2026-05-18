@@ -148,6 +148,9 @@ sai_status_t sai_api_query(_In_ sai_api_t sai_api_id, _Out_ void** api_method_ta
         *(const sai_lag_api_t**)api_method_table = &lag_api;
         return SAI_STATUS_SUCCESS;
 
+    case SAI_API_BUFFERS:
+        *(const sai_buffer_api_t**)api_method_table = &buffer_api;
+        return SAI_STATUS_SUCCESS;
     default:
         fprintf(stderr, "Invalid API type %d\n", sai_api_id);
         return SAI_STATUS_INVALID_PARAMETER;

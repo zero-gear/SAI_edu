@@ -40,6 +40,7 @@ extern const sai_router_interface_api_t router_interface_api;
 extern const sai_vlan_api_t             vlan_api;
 extern const sai_hostif_api_t           host_interface_api;
 extern const sai_lag_api_t              lag_api;
+extern const sai_buffer_api_t           buffer_api;
 
 /*
  *  SAI operation type
@@ -141,9 +142,88 @@ static __attribute__((__used__)) const char *sai_type2str_arr[] = {
     "Sample packet type",
 
     /* SAI_OBJECT_TYPE_STP_INSTANCE = 13 */
-    "Stp instance type"
+    "Stp instance type",
 
-    /* SAI_OBJECT_TYPE_MAX = 14 */
+    /* SAI_OBJECT_TYPE_TRAP_GROUP = 14 */
+    "TRAP_GROUP",
+
+    /* SAI_OBJECT_TYPE_ACL_TABLE_GROUP = 15 */
+    "ACL_TABLE_GROUP",
+
+    /* SAI_OBJECT_TYPE_POLICER = 16 */
+    "POLICER",
+
+    /* SAI_OBJECT_TYPE_WRED = 17 */
+    "WRED",
+
+    /* SAI_OBJECT_TYPE_QOS_MAPS = 18 */
+    "QOS_MAPS",
+
+    /* SAI_OBJECT_TYPE_QUEUE = 19 */
+    "QUEUE",
+
+    /* SAI_OBJECT_TYPE_SCHEDULER = 20 */
+    "SCHEDULER",
+
+    /* SAI_OBJECT_TYPE_SCHEDULER_GROUP = 21 */
+    "SCHEDULER_GROUP",
+
+    /* SAI_OBJECT_TYPE_BUFFER_POOL = 22 */
+    "BUFFER_POOL",
+
+    /* SAI_OBJECT_TYPE_BUFFER_PROFILE = 23 */
+    "BUFFER_PROFILE",
+
+    /* SAI_OBJECT_TYPE_PRIORITY_GROUP = 24 */
+    "PRIORITY_GROUP",
+
+    /* SAI_OBJECT_TYPE_LAG_MEMBER = 25 */
+    "LAG_MEMBER",
+
+    /* SAI_OBJECT_TYPE_HASH = 26 */
+    "HASH",
+
+    /* SAI_OBJECT_TYPE_UDF = 27 */
+    "UDF",
+
+    /* SAI_OBJECT_TYPE_UDF_MATCH = 28 */
+    "UDF_MATCH",
+
+    /* SAI_OBJECT_TYPE_UDF_GROUP = 29 */
+    "UDF_GROUP",
+
+    /* SAI_OBJECT_TYPE_FDB = 30 */
+    "FDB",
+
+    /* SAI_OBJECT_TYPE_SWITCH = 31 */
+    "SWITCH",
+
+    /* SAI_OBJECT_TYPE_TRAP = 32 */
+    "TRAP",
+
+    /* SAI_OBJECT_TYPE_TRAP_USER_DEF = 33 */
+    "TRAP_USER_DEF",
+
+    /* SAI_OBJECT_TYPE_NEIGHBOR = 34 */
+    "NEIGHBOR",
+
+    /* SAI_OBJECT_TYPE_ROUTE = 35 */
+    "ROUTE",
+
+    /* SAI_OBJECT_TYPE_VLAN = 36 */
+    "VLAN",
+
+    /* SAI_OBJECT_TYPE_TUNNEL_MAP = 37 */
+    "TUNNEL_MAP",
+
+    /* SAI_OBJECT_TYPE_TUNNEL = 38 */
+    "TUNNEL",
+
+    /* SAI_OBJECT_TYPE_TUNNEL_TABLE_ENTRY = 39 */
+    "TUNNEL_TABLE_ENTRY",
+
+    /* SAI_OBJECT_TYPE_MAX = 40 */
+    "MAX",
 };
 
 typedef union {
