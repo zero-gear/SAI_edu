@@ -162,6 +162,22 @@ sai_status_t stub_create_buffer_pool(
            find_attrib_in_list(attr_count, attr_list, SAI_BUFFER_POOL_ATTR_SIZE,
                                &size_attr, &size_index));
 
+    if (type_attr->s32 != SAI_BUFFER_POOL_INGRESS &&
+        type_attr->s32 != SAI_BUFFER_POOL_EGRESS) {
+        printf("Invalid buffer pool type %d\n", type_attr->s32);
+        return SAI_STATUS_INVALID_ATTR_VALUE_0 + type_index;
+    }
+
+    if (SAI_STATUS_SUCCESS ==
+        find_attrib_in_list(attr_count, attr_list, SAI_BUFFER_POOL_ATTR_TH_MODE,
+                            &th_mode_attr, &th_mode_index)) {
+        if (th_mode_attr->s32 != SAI_BUFFER_THRESHOLD_MODE_STATIC &&
+            th_mode_attr->s32 != SAI_BUFFER_THRESHOLD_MODE_DYNAMIC) {
+            printf("Invalid buffer pool threshold mode %d\n", th_mode_attr->s32);
+            return SAI_STATUS_INVALID_ATTR_VALUE_0 + th_mode_index;
+        }
+    }
+
     for (idx = 0; idx < MAX_NUMBER_OF_BUFFER_POOLS; idx++) {
         if (!buffer_pool_db.pools[idx].is_used) {
             break;
@@ -460,6 +476,9 @@ sai_status_t stub_create_buffer_profile(
             printf("Missing SHARED_STATIC_TH for static buffer pool profile\n");
             return SAI_STATUS_MANDATORY_ATTRIBUTE_MISSING;
         }
+    } else {
+        printf("Invalid buffer pool threshold mode for profile\n");
+        return SAI_STATUS_INVALID_PARAMETER;
     }
 
     for (idx = 0; idx < MAX_NUMBER_OF_BUFFER_PROFILES; idx++) {
@@ -481,7 +500,7 @@ sai_status_t stub_create_buffer_profile(
 
     if (buffer_pool_db.pools[pool_db_id].th_mode == SAI_BUFFER_THRESHOLD_MODE_DYNAMIC) {
         buffer_pool_db.profiles[profile_db_id].shared_dynamic_th = dynamic_th_attr->s8;
-    } else {
+    } else if (buffer_pool_db.pools[pool_db_id].th_mode == SAI_BUFFER_THRESHOLD_MODE_STATIC) {
         buffer_pool_db.profiles[profile_db_id].shared_static_th = static_th_attr->u32;
     }
 
@@ -501,7 +520,7 @@ sai_status_t stub_create_buffer_profile(
                profile_db_id, (uint64_t)*buffer_profile_id, (uint64_t)pool_id_attr->oid,
                buffer_pool_db.profiles[profile_db_id].buffer_size,
                buffer_pool_db.profiles[profile_db_id].shared_dynamic_th);
-    } else {
+    } else if (buffer_pool_db.pools[pool_db_id].th_mode == SAI_BUFFER_THRESHOLD_MODE_STATIC) {
         printf("[STUB|new] BUFFER PROFILE[%u]  oid=0x%016" PRIx64 "  pool=0x%016" PRIx64
                "  size=%u  static_th=%u\n",
                profile_db_id, (uint64_t)*buffer_profile_id, (uint64_t)pool_id_attr->oid,

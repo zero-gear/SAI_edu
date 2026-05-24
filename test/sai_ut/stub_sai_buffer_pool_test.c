@@ -67,7 +67,7 @@ int main()
         return 1;
     }
 
-    TEST_SECTION("CREATING");
+    TEST_SECTION("CREATING BUFFER POOLS");
 
     sai_object_id_t pool1_oid;
     sai_attribute_t pool1_attrs[2];
@@ -121,6 +121,40 @@ int main()
         return 1;
     }
     printf("[TEST|neg] create without mandatory TYPE  status=%d\n", status);
+
+    sai_attribute_t pool_invalid_type_attrs[2];
+    pool_invalid_type_attrs[0].id = SAI_BUFFER_POOL_ATTR_TYPE;
+    pool_invalid_type_attrs[0].value.s32 = 99;
+    pool_invalid_type_attrs[1].id = SAI_BUFFER_POOL_ATTR_SIZE;
+    pool_invalid_type_attrs[1].value.u32 = 4096;
+    status = buffer_api->create_buffer_pool(&pool_bad_oid, 2, pool_invalid_type_attrs);
+    if (status == SAI_STATUS_SUCCESS) {
+        printf("[TEST|fail] create with invalid TYPE should have been rejected\n");
+        return 1;
+    }
+    if (status != SAI_STATUS_INVALID_ATTR_VALUE_0) {
+        printf("[TEST|fail] invalid TYPE expected INVALID_ATTR_VALUE_0, got %d\n", status);
+        return 1;
+    }
+    printf("[TEST|neg] create with invalid TYPE  status=%d\n", status);
+
+    sai_attribute_t pool_invalid_th_attrs[3];
+    pool_invalid_th_attrs[0].id = SAI_BUFFER_POOL_ATTR_TYPE;
+    pool_invalid_th_attrs[0].value.s32 = SAI_BUFFER_POOL_INGRESS;
+    pool_invalid_th_attrs[1].id = SAI_BUFFER_POOL_ATTR_SIZE;
+    pool_invalid_th_attrs[1].value.u32 = 4096;
+    pool_invalid_th_attrs[2].id = SAI_BUFFER_POOL_ATTR_TH_MODE;
+    pool_invalid_th_attrs[2].value.s32 = 99;
+    status = buffer_api->create_buffer_pool(&pool_bad_oid, 3, pool_invalid_th_attrs);
+    if (status == SAI_STATUS_SUCCESS) {
+        printf("[TEST|fail] create with invalid TH_MODE should have been rejected\n");
+        return 1;
+    }
+    if (status != SAI_STATUS_INVALID_ATTR_VALUE_0 + 2) {
+        printf("[TEST|fail] invalid TH_MODE expected INVALID_ATTR_VALUE_0+2, got %d\n", status);
+        return 1;
+    }
+    printf("[TEST|neg] create with invalid TH_MODE  status=%d\n", status);
 
     TEST_SECTION("CREATING PROFILES");
 
